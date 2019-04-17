@@ -16,5 +16,5 @@ public interface WishListService {
     int insertWishList(WishList wishList);
     int deleteWishList(int id);
     int updateWishList(WishList wishList);
-    List<WishList> getByStatue(boolean statue);
+    List<WishList> getByStatue(int statue);
 }

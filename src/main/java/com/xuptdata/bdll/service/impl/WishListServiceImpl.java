@@ -49,7 +49,7 @@ public class WishListServiceImpl implements WishListService {
     }
 
     @Override
-    public List<WishList> getByStatue(boolean statue) {
+    public List<WishList> getByStatue(int statue) {
         List<WishList> ret = wishListMapper.getByStatue(statue);
         return ret;
     }

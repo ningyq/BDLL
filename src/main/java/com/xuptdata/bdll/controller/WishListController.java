@@ -1,11 +1,18 @@
 package com.xuptdata.bdll.controller;
 
+import com.xuptdata.bdll.entity.Books;
 import com.xuptdata.bdll.entity.WishList;
+import com.xuptdata.bdll.service.BooksService;
 import com.xuptdata.bdll.service.WishListService;
+import com.xuptdata.bdll.service.impl.BooksServiceImpl;
+import com.xuptdata.bdll.service.impl.WishListServiceImpl;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.crypto.Data;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,7 +23,9 @@ import java.util.List;
 @RequestMapping("/wishList")
 public class WishListController {
     @Autowired
-    private WishListService wishListService;
+    private WishListServiceImpl wishListService;
+    @Autowired
+    private BooksServiceImpl booksService;
 
     @GetMapping("/getList")
     public List<WishList> getList(){
@@ -33,8 +42,9 @@ public class WishListController {
         return wishListService.getByName(name);
     }
 
+
     @PostMapping("/getByStatue")
-    public List<WishList> getByStatue(@PathVariable boolean statue){
+    public List<WishList> getByStatue(@PathVariable int statue){
         return wishListService.getByStatue(statue);
     }
 
@@ -46,6 +56,24 @@ public class WishListController {
     @PostMapping("/insert")
     public int insert(@PathVariable WishList wishList){
         return wishListService.insertWishList(wishList);
+    }
+    @PostMapping("/update/statue")
+    public int updateStatue(@PathVariable int statue,@PathVariable int id){
+        WishList wishList = wishListService.getById(id);
+        if (statue == 0){
+            wishList.setStatus(1);
+        }
+        if (statue == 1){
+            wishList.setStatus(2);
+            wishList.setDelFlag(true);
+            Books books = new Books();
+            books.setName(wishList.getName());
+            books.setClassifyId(wishList.getClassifyId());
+            books.setStatus(true);
+            booksService.insertBook(books);
+        }
+        return wishListService.updateWishList(wishList);
+
     }
 
 }
