@@ -2,7 +2,7 @@ package com.xuptdata.bdll.entity;
 
 import java.util.Date;
 
-public class wishList {
+public class WishList {
     private Integer id;
 
     private String name;
