@@ -16,6 +16,7 @@ import java.util.List;
 public class BooksServiceImpl implements BooksService {
     @Autowired
     private BooksMapper booksMapper;
+
     @Override
     public List<Books> getList() {
         List<Books> ret = booksMapper.selectList();

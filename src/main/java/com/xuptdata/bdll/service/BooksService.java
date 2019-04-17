@@ -22,7 +22,9 @@ public interface BooksService {
     List<Books> getByStatue(boolean statue);
 
     int insertBook(Books book);
+
     int deleteBookById(int id);
+
     int updateBooks(Books books);
 
 
