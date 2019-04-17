@@ -1,28 +1,18 @@
 package com.xuptdata.bdll.mapper;
 
 import com.xuptdata.bdll.entity.WishList;
+import com.xuptdata.bdll.util.BaseMapper;
 import org.apache.ibatis.annotations.Select;
-import org.beetl.sql.core.engine.PageQuery;
 
-public interface WishListMapper {
-    int deleteByPrimaryKey(Integer id);
+import java.util.List;
 
-    int insert(WishList record);
-
-    int insertSelective(WishList record);
-
-    WishList selectByPrimaryKey(Integer id);
-
-    int updateByPrimaryKeySelective(WishList record);
-
-    int updateByPrimaryKey(WishList record);
-
+public interface WishListMapper extends BaseMapper<WishList> {
     @Select("select * from wish_list where del_flag = 0")
-    PageQuery<WishList> selectAll();
+    List<WishList> selectAll();
 
     @Select("select * from wish_list where del_flag = 0 and name like #name#")
-    WishList getByName(String name);
+    List<WishList> getByName(String name);
 
     @Select("select * from wish_list where del_flag = 0 and statue = #statue ")
-    PageQuery<WishList> getByStatue(boolean statue);
+    List<WishList> getByStatue(boolean statue);
 }

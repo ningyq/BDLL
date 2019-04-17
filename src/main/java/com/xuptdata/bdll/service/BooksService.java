@@ -2,8 +2,8 @@ package com.xuptdata.bdll.service;
 
 
 import com.xuptdata.bdll.entity.Books;
-import org.beetl.sql.core.engine.PageQuery;
 
+import java.util.List;
 
 
 /**
@@ -11,15 +11,15 @@ import org.beetl.sql.core.engine.PageQuery;
  * @Date: 2019/4/16 17:40
  */
 public interface BooksService {
-    PageQuery<Books> getList();
+    List<Books> getList();
 
     Books getById(int id);
 
-    PageQuery<Books> getByName(String name);
+    Books getByName(String name);
 
-    PageQuery<Books> getByClassify(int classifyId);
+    List<Books> getByClassify(int classifyId);
 
-    PageQuery<Books> getByStatue(boolean statue);
+    List<Books> getByStatue(boolean statue);
 
     int insertBook(Books book);
     int deleteBookById(int id);

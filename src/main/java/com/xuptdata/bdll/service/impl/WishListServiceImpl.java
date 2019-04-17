@@ -3,9 +3,10 @@ package com.xuptdata.bdll.service.impl;
 import com.xuptdata.bdll.entity.WishList;
 import com.xuptdata.bdll.mapper.WishListMapper;
 import com.xuptdata.bdll.service.WishListService;
-import org.beetl.sql.core.engine.PageQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @Author: slicing
@@ -16,14 +17,19 @@ public class WishListServiceImpl implements WishListService {
     @Autowired
     private WishListMapper wishListMapper;
     @Override
-    public PageQuery<WishList> getList() {
-        PageQuery<WishList> ret = wishListMapper.selectAll();
+    public List<WishList> getList() {
+        List<WishList> ret = wishListMapper.selectAll();
+        return ret;
+    }
+    @Override
+    public WishList getById(int id) {
+        WishList ret = wishListMapper.selectByPrimaryKey(id);
         return ret;
     }
 
     @Override
-    public WishList getByName(String name) {
-        WishList ret = wishListMapper.getByName(name);
+    public List<WishList> getByName(String name) {
+        List<WishList> ret = wishListMapper.getByName(name);
         return ret;
     }
 
@@ -43,8 +49,8 @@ public class WishListServiceImpl implements WishListService {
     }
 
     @Override
-    public PageQuery<WishList> getByStatue(boolean statue) {
-        PageQuery<WishList> ret = wishListMapper.getByStatue(statue);
+    public List<WishList> getByStatue(boolean statue) {
+        List<WishList> ret = wishListMapper.getByStatue(statue);
         return ret;
     }
 }

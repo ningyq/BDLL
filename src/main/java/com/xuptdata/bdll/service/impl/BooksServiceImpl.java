@@ -3,9 +3,10 @@ package com.xuptdata.bdll.service.impl;
 import com.xuptdata.bdll.entity.Books;
 import com.xuptdata.bdll.mapper.BooksMapper;
 import com.xuptdata.bdll.service.BooksService;
-import org.beetl.sql.core.engine.PageQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @Author: slicing
@@ -16,8 +17,8 @@ public class BooksServiceImpl implements BooksService {
     @Autowired
     private BooksMapper booksMapper;
     @Override
-    public PageQuery<Books> getList() {
-        PageQuery<Books> ret = booksMapper.selectList();
+    public List<Books> getList() {
+        List<Books> ret = booksMapper.selectList();
         return ret;
     }
 
@@ -28,20 +29,20 @@ public class BooksServiceImpl implements BooksService {
     }
 
     @Override
-    public PageQuery<Books> getByName(String name) {
-        PageQuery<Books> ret = booksMapper.selectByName(name);
+    public Books getByName(String name) {
+        Books ret = booksMapper.selectByName(name);
         return ret;
     }
 
     @Override
-    public PageQuery<Books> getByClassify(int classifyId) {
-        PageQuery<Books> ret = booksMapper.selectByClassify(classifyId);
+    public List<Books> getByClassify(int classifyId) {
+        List<Books> ret = booksMapper.selectByClassify(classifyId);
         return ret;
     }
 
     @Override
-    public PageQuery<Books> getByStatue(boolean statue) {
-        PageQuery<Books> ret = booksMapper.selectByStatue(statue);
+    public List<Books> getByStatue(boolean statue) {
+        List<Books> ret = booksMapper.selectByStatue(statue);
         return ret;
     }
 

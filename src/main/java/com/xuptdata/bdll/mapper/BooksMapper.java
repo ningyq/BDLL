@@ -1,31 +1,21 @@
 package com.xuptdata.bdll.mapper;
 
 import com.xuptdata.bdll.entity.Books;
+import com.xuptdata.bdll.util.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
-import org.beetl.sql.core.engine.PageQuery;
+
+import java.util.List;
 
 
-@Mapper
-public interface BooksMapper {
-    int deleteByPrimaryKey(Integer id);
-
-    int insert(Books record);
-
-    int insertSelective(Books record);
-
-    Books selectByPrimaryKey(Integer id);
-
-    int updateByPrimaryKeySelective(Books record);
-
-    int updateByPrimaryKey(Books record);
+public interface BooksMapper extends BaseMapper<Books> {
     @Select("select * from books where del_flag = 1")
-    PageQuery<Books> selectList();
+    List<Books> selectList();
 
     @Select("select * from books where del_flag = 1 and name like #name#")
-    PageQuery<Books> selectByName(String name);
+   Books selectByName(String name);
     @Select("select * from books where del_flag = 1 and classify_id like #classifyId#")
-    PageQuery<Books> selectByClassify(int classifyId);
+    List<Books> selectByClassify(int classifyId);
     @Select("select * from books where del_flag = 1 and statue like #statue#")
-    PageQuery<Books> selectByStatue(boolean statue);
+    List<Books> selectByStatue(boolean statue);
 }

@@ -1,12 +1,13 @@
 package com.xuptdata.bdll.controller;
 
 import com.xuptdata.bdll.entity.Books;
+import com.xuptdata.bdll.entity.WishList;
 import com.xuptdata.bdll.service.impl.BooksServiceImpl;
-import org.beetl.sql.core.engine.PageQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @Author: slicing
@@ -19,9 +20,38 @@ public class BooksController {
     private BooksServiceImpl booksService;
 
     @GetMapping("/getList")
-    public PageQuery<Books> getList(){
-        PageQuery<Books> ret = booksService.getList();
+    public List<Books> getList(){
+        List<Books> ret = booksService.getList();
         return ret;
+    }
+
+    @PostMapping("/getById")
+    public Books getById(@PathVariable int id){
+        return booksService.getById(id);
+    }
+
+    @PostMapping("/getByName")
+    public Books getByName(@PathVariable String name){
+        return booksService.getByName(name);
+    }
+
+    @PostMapping("/getByClassifyId")
+    public Books getByClassifyId(@PathVariable int classifyId){
+        return booksService.getById(classifyId);
+    }
+
+    @PostMapping("/getByStatue")
+    public List<Books> getByStatue(@PathVariable boolean statue){
+        return booksService.getByStatue(statue);
+    }
+
+    @PutMapping("/update")
+    public int update(@PathVariable Books books){
+        return booksService.updateBooks(books);
+    }
+    @PostMapping("/insert")
+    public int insert(@PathVariable Books books){
+        return booksService.insertBook(books);
     }
 
 
