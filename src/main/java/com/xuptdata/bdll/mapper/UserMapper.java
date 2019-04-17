@@ -1,17 +1,7 @@
 package com.xuptdata.bdll.mapper;
 
 import com.xuptdata.bdll.entity.User;
+import com.xuptdata.bdll.util.BaseMapper;
 
-public interface UserMapper {
-    int deleteByPrimaryKey(Integer id);
-
-    int insert(User record);
-
-    int insertSelective(User record);
-
-    User selectByPrimaryKey(Integer id);
-
-    int updateByPrimaryKeySelective(User record);
-
-    int updateByPrimaryKey(User record);
+public interface UserMapper extends BaseMapper<User> {
 }

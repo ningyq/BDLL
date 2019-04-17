@@ -22,6 +22,7 @@ public interface WishListMapper {
 
     @Select("select * from wish_list where del_flag = 0 and name like #name#")
     WishList getByName(String name);
+
     @Select("select * from wish_list where del_flag = 0 and statue = #statue ")
     PageQuery<WishList> getByStatue(boolean statue);
 }
