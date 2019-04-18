@@ -28,12 +28,21 @@ public class WishListController {
     @Autowired
     private BooksServiceImpl booksService;
 
+    /**
+     * 查询所有心愿单信息
+     * @return
+     */
     @GetMapping("/getList")
     public List<WishList> getList(){
         return wishListService.getList();
     }
 
-    @PostMapping("/getById")
+    /**
+     * 根据编号查询
+     * @param id
+     * @return
+     */
+    @GetMapping("/getById")
     public WishList getById(@PathVariable int id){
         return wishListService.getById(id);
     }
@@ -43,7 +52,7 @@ public class WishListController {
      * @param name
      * @return
      */
-    @PostMapping("/getByName")
+    @GetMapping("/getByName")
     public List<WishList> getByName(@PathVariable String name){
         return wishListService.getByName(name);
     }
@@ -54,7 +63,7 @@ public class WishListController {
      * @param statue
      * @return
      */
-    @PostMapping("/getByStatue")
+    @GetMapping("/getByStatue")
     public List<WishList> getByStatue(@PathVariable int statue){
         return wishListService.getByStatue(statue);
     }

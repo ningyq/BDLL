@@ -18,13 +18,22 @@ public class BooksController {
     @Autowired
     private BooksServiceImpl booksService;
 
+    /**
+     * 查询所有图书信息
+     * @return
+     */
     @GetMapping("/getList")
     public List<Books> getList(){
         List<Books> ret = booksService.getList();
         return ret;
     }
 
-    @PostMapping("/getById")
+    /**
+     * 根据编号查询
+     * @param id
+     * @return
+     */
+    @GetMapping("/getById")
     public Books getById(@PathVariable int id){
         return booksService.getById(id);
     }
@@ -34,7 +43,7 @@ public class BooksController {
      * @param name
      * @return
      */
-    @PostMapping("/getByName")
+    @GetMapping("/getByName")
     public Books getByName(@PathVariable String name){
         return booksService.getByName(name);
     }
@@ -44,7 +53,7 @@ public class BooksController {
      * @param classifyId
      * @return
      */
-    @PostMapping("/getByClassifyId")
+    @GetMapping("/getByClassifyId")
     public List<Books> getByClassifyId(@PathVariable int classifyId){
         return booksService.getByClassify(classifyId);
     }
@@ -54,7 +63,7 @@ public class BooksController {
      * @param statue
      * @return
      */
-    @PostMapping("/getByStatue")
+    @GetMapping("/getByStatue")
     public List<Books> getByStatue(@PathVariable boolean statue){
         return booksService.getByStatue(statue);
     }
