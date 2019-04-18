@@ -1,6 +1,7 @@
 package com.xuptdata.bdll.controller;
 
 import com.xuptdata.bdll.entity.Books;
+import com.xuptdata.bdll.entity.Response;
 import com.xuptdata.bdll.entity.WishList;
 import com.xuptdata.bdll.service.BooksService;
 import com.xuptdata.bdll.service.WishListService;
@@ -37,28 +38,80 @@ public class WishListController {
         return wishListService.getById(id);
     }
 
+    /**
+     * 根据书名查询
+     * @param name
+     * @return
+     */
     @PostMapping("/getByName")
     public List<WishList> getByName(@PathVariable String name){
         return wishListService.getByName(name);
     }
 
 
+    /**
+     * 根据心愿单状态查询
+     * @param statue
+     * @return
+     */
     @PostMapping("/getByStatue")
     public List<WishList> getByStatue(@PathVariable int statue){
         return wishListService.getByStatue(statue);
     }
 
+    /**
+     * 修改信息
+     * @param wishList
+     * @return
+     */
     @PutMapping("/update")
-    public int update(@PathVariable WishList wishList){
-        return wishListService.updateWishList(wishList);
+    public Response update(@PathVariable WishList wishList){
+        int result =  wishListService.updateWishList(wishList);
+        if (result == 0){
+            return new Response("error","更新失败");
+        }
+        return new Response("success","更新成功");
     }
 
+    /**
+     * 添加心愿单
+     * @param wishList
+     * @return
+     */
     @PostMapping("/insert")
-    public int insert(@PathVariable WishList wishList){
-        return wishListService.insertWishList(wishList);
+    public Response insert(@PathVariable WishList wishList){
+        int result =  wishListService.insertWishList(wishList);
+        if (result == 0){
+            return new Response("error","添加失败");
+        }
+        return new Response("success","添加成功");
     }
+
+    /**
+     * 删除
+     * @param id
+     * @return
+     */
+    @PutMapping("/delete")
+    public Response deleteWish(@PathVariable int id){
+        WishList wishList = wishListService.getById(id);
+        wishList.setDelFlag(true);
+        int result = wishListService.updateWishList(wishList);
+        if (result == 0){
+            return new Response("error","删除失败");
+        }
+        return new Response("success","删除成功");
+
+    }
+
+    /**
+     * 修改心愿单状态
+     * @param statue
+     * @param id
+     * @return
+     */
     @PostMapping("/update/statue")
-    public int updateStatue(@PathVariable int statue,@PathVariable int id){
+    public Response updateStatue(@PathVariable int statue,@PathVariable int id){
         WishList wishList = wishListService.getById(id);
         if (statue == 0){
             wishList.setStatus(1);
@@ -70,9 +123,17 @@ public class WishListController {
             books.setName(wishList.getName());
             books.setClassifyId(wishList.getClassifyId());
             books.setStatus(true);
-            booksService.insertBook(books);
+            int result = booksService.insertBook(books);
+            if (result == 0){
+                return new Response("error","添加失败");
+            }
+            return new Response("success","添加成功");
         }
-        return wishListService.updateWishList(wishList);
+        int result = wishListService.updateWishList(wishList);
+        if (result == 0){
+            return new Response("error","更新失败");
+        }
+        return new Response("success","更新成功");
 
     }
 

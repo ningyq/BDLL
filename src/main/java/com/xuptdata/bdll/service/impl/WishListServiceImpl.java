@@ -5,6 +5,7 @@ import com.xuptdata.bdll.mapper.WishListMapper;
 import com.xuptdata.bdll.service.WishListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -34,16 +35,19 @@ public class WishListServiceImpl implements WishListService {
     }
 
     @Override
+    @Transactional
     public int insertWishList(WishList wishList) {
         return wishListMapper.insert(wishList);
     }
 
     @Override
+    @Transactional
     public int deleteWishList(int id) {
         return wishListMapper.deleteByPrimaryKey(id);
     }
 
     @Override
+    @Transactional
     public int updateWishList(WishList wishList) {
         return wishListMapper.updateByPrimaryKey(wishList);
     }

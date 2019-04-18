@@ -5,6 +5,7 @@ import com.xuptdata.bdll.mapper.BooksMapper;
 import com.xuptdata.bdll.service.BooksService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -48,16 +49,19 @@ public class BooksServiceImpl implements BooksService {
     }
 
     @Override
+    @Transactional
     public int insertBook(Books book) {
         return booksMapper.insert(book);
     }
 
     @Override
+    @Transactional
     public int deleteBookById(int id) {
         return booksMapper.deleteByPrimaryKey(id);
     }
 
     @Override
+    @Transactional
     public int updateBooks(Books books) {
         return booksMapper.updateByPrimaryKey(books);
     }

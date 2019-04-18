@@ -11,10 +11,17 @@ import java.util.List;
  */
 public interface WishListService {
     List<WishList> getList();
+
     WishList getById(int id);
+
     List<WishList> getByName(String name);
+
     int insertWishList(WishList wishList);
+
     int deleteWishList(int id);
+
+
     int updateWishList(WishList wishList);
+
     List<WishList> getByStatue(int statue);
 }
