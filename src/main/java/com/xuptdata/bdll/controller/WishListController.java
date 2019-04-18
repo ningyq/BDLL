@@ -89,6 +89,7 @@ public class WishListController {
      */
     @PostMapping("/insert")
     public Response insert(@PathVariable WishList wishList){
+        wishList.setCreateTime(new Date());
         int result =  wishListService.insertWishList(wishList);
         if (result == 0){
             return new Response("error","添加失败");

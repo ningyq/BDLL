@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -89,6 +90,7 @@ public class BooksController {
      */
     @PostMapping("/insert")
     public Response insert(@PathVariable Books books){
+        books.setCreateTime(new Date());
         int result =  booksService.insertBook(books);
         if (result == 0){
             return new Response("error","添加失败");
@@ -101,7 +103,7 @@ public class BooksController {
      * @param id
      * @return
      */
-    @PutMapping("/update")
+    @PutMapping("/update/borrow")
     public Response borrow(@PathVariable int id){
         Books books = booksService.getById(id);
         if (books.getNumber()>0){
@@ -125,7 +127,7 @@ public class BooksController {
      * @return
      */
 
-    @PutMapping("/update")
+    @PutMapping("/update/restitution")
     public Response restitution(@PathVariable int id){
         Books books = booksService.getById(id);
         books.setNumber(books.getNumber()-1);
