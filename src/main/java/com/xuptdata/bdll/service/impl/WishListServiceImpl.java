@@ -1,5 +1,7 @@
 package com.xuptdata.bdll.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.xuptdata.bdll.entity.WishList;
 import com.xuptdata.bdll.mapper.WishListMapper;
 import com.xuptdata.bdll.service.WishListService;
@@ -18,9 +20,12 @@ public class WishListServiceImpl implements WishListService {
     @Autowired
     private WishListMapper wishListMapper;
     @Override
-    public List<WishList> getList() {
+    public PageInfo getList(int pageNum,int pageSize) {
+        PageHelper.startPage(pageNum,pageSize);
         List<WishList> ret = wishListMapper.selectAll();
-        return ret;
+        PageInfo<WishList> pageInfo = new PageInfo<>(ret);
+        return pageInfo;
+
     }
     @Override
     public WishList getById(int id) {
@@ -32,6 +37,14 @@ public class WishListServiceImpl implements WishListService {
     public List<WishList> getByName(String name) {
         List<WishList> ret = wishListMapper.getByName(name);
         return ret;
+    }
+
+    @Override
+    public PageInfo getByClassify(int pageNum, int pageSize, int classifyId) {
+        PageHelper.startPage(pageNum,pageSize);
+        List<WishList> ret = wishListMapper.getByClassify(classifyId);
+        PageInfo<WishList> pageInfo = new PageInfo<>(ret);
+        return pageInfo;
     }
 
     @Override
@@ -53,8 +66,10 @@ public class WishListServiceImpl implements WishListService {
     }
 
     @Override
-    public List<WishList> getByStatue(int statue) {
+    public PageInfo getByStatue(int pageNum,int pageSize,int statue) {
+        PageHelper.startPage(pageNum,pageSize);
         List<WishList> ret = wishListMapper.getByStatue(statue);
-        return ret;
+        PageInfo<WishList> pageInfo = new PageInfo<>(ret);
+        return pageInfo;
     }
 }

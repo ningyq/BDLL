@@ -1,4 +1,5 @@
 package com.xuptdata.bdll.controller;
+import com.github.pagehelper.PageInfo;
 import com.xuptdata.bdll.entity.Books;
 import com.xuptdata.bdll.entity.Result;
 import com.xuptdata.bdll.service.impl.BooksServiceImpl;
@@ -6,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
@@ -29,9 +29,12 @@ public class BooksController {
      * @return
      */
     @GetMapping("/getList")
-    public List<Books> getList(){
-        List<Books> ret = booksService.getList();
-        return ret;
+    public Result getList(@PathVariable int pageNum, @PathVariable int pageSize){
+        PageInfo pageInfo = booksService.getList(pageNum,pageSize);
+
+        return new Result("success","查询成功",pageInfo);
+
+
     }
 
     /**
@@ -40,8 +43,9 @@ public class BooksController {
      * @return
      */
     @GetMapping("/getById")
-    public Books getById(@PathVariable int id){
-        return booksService.getById(id);
+    public Result getById(@PathVariable int id){
+        Books books = booksService.getById(id);
+        return new Result("success","查询成功",books);
     }
 
     /**
@@ -83,8 +87,9 @@ public class BooksController {
      * @return
      */
     @GetMapping("/getByName")
-    public Books getByName(@PathVariable String name){
-        return booksService.getByName(name);
+    public Result getByName(@PathVariable String name){
+        List<Books> books = booksService.getByName(name);
+        return new Result("success","查询成功",books);
     }
 
     /**
@@ -93,8 +98,9 @@ public class BooksController {
      * @return
      */
     @GetMapping("/getByClassifyId")
-    public List<Books> getByClassifyId(@PathVariable int classifyId){
-        return booksService.getByClassify(classifyId);
+    public Result getByClassifyId(@PathVariable int pageNum, @PathVariable int pageSize,@PathVariable int classifyId){
+        PageInfo pageInfo = booksService.getByClassify(pageNum,pageSize,classifyId);
+        return new Result("success","查询成功",pageInfo);
     }
 
     /**
@@ -103,8 +109,9 @@ public class BooksController {
      * @return
      */
     @GetMapping("/getByStatue")
-    public List<Books> getByStatue(@PathVariable boolean statue){
-        return booksService.getByStatue(statue);
+    public Result getByStatue(@PathVariable int pageNum, @PathVariable int pageSize,@PathVariable boolean statue){
+        PageInfo pageInfo =  booksService.getByStatue(pageNum,pageSize,statue);
+        return new Result("success","查询成功",pageInfo);
     }
 
     /**

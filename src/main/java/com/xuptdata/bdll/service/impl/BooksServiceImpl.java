@@ -1,5 +1,7 @@
 package com.xuptdata.bdll.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.xuptdata.bdll.entity.Books;
 import com.xuptdata.bdll.mapper.BooksMapper;
 import com.xuptdata.bdll.service.BooksService;
@@ -19,9 +21,11 @@ public class BooksServiceImpl implements BooksService {
     private BooksMapper booksMapper;
 
     @Override
-    public List<Books> getList() {
+    public PageInfo getList(int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum,pageSize);
         List<Books> ret = booksMapper.selectList();
-        return ret;
+        PageInfo<Books> pageInfo = new PageInfo<>(ret);
+        return pageInfo;
     }
 
     @Override
@@ -31,21 +35,25 @@ public class BooksServiceImpl implements BooksService {
     }
 
     @Override
-    public Books getByName(String name) {
-        Books ret = booksMapper.selectByName(name);
+    public List<Books> getByName(String name) {
+        List<Books> ret = booksMapper.selectByName(name);
         return ret;
     }
 
     @Override
-    public List<Books> getByClassify(int classifyId) {
+    public PageInfo getByClassify(int pageNum, int pageSize,int classifyId) {
+        PageHelper.startPage(pageNum,pageSize);
         List<Books> ret = booksMapper.selectByClassify(classifyId);
-        return ret;
+        PageInfo<Books> pageInfo = new PageInfo<>(ret);
+        return pageInfo;
     }
 
     @Override
-    public List<Books> getByStatue(boolean statue) {
+    public PageInfo getByStatue(int pageNum, int pageSize,boolean statue) {
+        PageHelper.startPage(pageNum,pageSize);
         List<Books> ret = booksMapper.selectByStatue(statue);
-        return ret;
+        PageInfo<Books> pageInfo = new PageInfo<>(ret);
+        return pageInfo;
     }
 
     @Override

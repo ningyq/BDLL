@@ -1,6 +1,7 @@
 package com.xuptdata.bdll.service;
 
 
+import com.github.pagehelper.PageInfo;
 import com.xuptdata.bdll.entity.Books;
 
 import java.util.List;
@@ -11,15 +12,15 @@ import java.util.List;
  * @Date: 2019/4/16 17:40
  */
 public interface BooksService {
-    List<Books> getList();
+    PageInfo getList(int pageNum, int pageSize);
 
     Books getById(int id);
 
-    Books getByName(String name);
+    List<Books> getByName(String name);
 
-    List<Books> getByClassify(int classifyId);
+    PageInfo getByClassify(int pageNum,int pageSize,int classifyId);
 
-    List<Books> getByStatue(boolean statue);
+    PageInfo getByStatue(int pageNum,int pageSize,boolean statue);
 
     int insertBook(Books book);
 

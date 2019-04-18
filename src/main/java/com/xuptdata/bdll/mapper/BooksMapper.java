@@ -12,7 +12,7 @@ public interface BooksMapper extends BaseMapper<Books> {
     List<Books> selectList();
 
     @Select("select * from books where del_flag = 0 and name like #name#")
-    Books selectByName(String name);
+    List<Books> selectByName(String name);
 
     @Select("select * from books where del_flag = 0 and classify_id like #classifyId#")
     List<Books> selectByClassify(int classifyId);

@@ -1,5 +1,5 @@
 package com.xuptdata.bdll.controller;
-
+import com.github.pagehelper.PageInfo;
 import com.xuptdata.bdll.entity.Books;
 import com.xuptdata.bdll.entity.Result;
 import com.xuptdata.bdll.entity.WishList;
@@ -8,7 +8,6 @@ import com.xuptdata.bdll.service.impl.WishListServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.Date;
 import java.util.List;
 
@@ -30,8 +29,9 @@ public class WishListController {
      * @return
      */
     @GetMapping("/getList")
-    public List<WishList> getList(){
-        return wishListService.getList();
+    public Result getList(@PathVariable int pageNum, @PathVariable int pageSize){
+        PageInfo pageInfo =  wishListService.getList(pageNum,pageSize);
+        return new Result("success","查询成功",pageInfo);
     }
 
     /**
@@ -40,8 +40,9 @@ public class WishListController {
      * @return
      */
     @GetMapping("/getById")
-    public WishList getById(@PathVariable int id){
-        return wishListService.getById(id);
+    public Result getById(@PathVariable int id){
+        WishList wishList =  wishListService.getById(id);
+        return new Result("success","查询成功",wishList);
     }
 
     /**
@@ -50,8 +51,9 @@ public class WishListController {
      * @return
      */
     @GetMapping("/getByName")
-    public List<WishList> getByName(@PathVariable String name){
-        return wishListService.getByName(name);
+    public Result getByName(@PathVariable String name){
+        List<WishList> wishListList =  wishListService.getByName(name);
+        return new Result("success","查询成功",wishListList);
     }
 
 
@@ -61,8 +63,16 @@ public class WishListController {
      * @return
      */
     @GetMapping("/getByStatue")
-    public List<WishList> getByStatue(@PathVariable int statue){
-        return wishListService.getByStatue(statue);
+    public Result getByStatue(@PathVariable int pageNum, @PathVariable int pageSize,@PathVariable int statue){
+        PageInfo pageInfo =  wishListService.getByStatue(pageNum,pageSize,statue);
+        return new Result("success","查询成功",pageInfo);
+    }
+
+
+    @GetMapping("/getByClassifyId")
+    public Result getByClassify(@PathVariable int pageNum, @PathVariable int pageSize,@PathVariable int classigyId){
+        PageInfo pageInfo = wishListService.getByClassify(pageNum,pageSize,classigyId);
+        return new Result("success","查询成功",pageInfo);
     }
 
     /**
