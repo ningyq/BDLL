@@ -7,9 +7,12 @@ import org.apache.ibatis.annotations.Select;
 import java.util.List;
 
 public interface ClassifyMapper extends BaseMapper<Classify> {
-    @Select("select * from classify where del_flag = 1 and name like #name#")
+    @Select("select * from classify where del_flag = 0 and name like #name#")
     Classify selectByName(String name);
 
-    @Select("select * from classify where del_flag = 1 and statue like #statue#")
+    @Select("select * from classify where del_flag = 0 and statue like #statue#")
     List<Classify> selectByStatue(boolean statue);
+
+    @Select("select * from classify where del_flag = #delFlag#")
+    List<Classify> selectByDelFlag(int delFlag);
 }

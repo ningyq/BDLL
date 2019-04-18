@@ -26,6 +26,4 @@ public interface BooksService {
     int deleteBookById(int id);
 
     int updateBooks(Books books);
-
-
 }

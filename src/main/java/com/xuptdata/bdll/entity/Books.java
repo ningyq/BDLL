@@ -1,7 +1,6 @@
 package com.xuptdata.bdll.entity;
 
 import lombok.Data;
-import org.springframework.boot.autoconfigure.web.ResourceProperties;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;

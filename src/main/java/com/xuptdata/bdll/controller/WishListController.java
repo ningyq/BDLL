@@ -1,18 +1,14 @@
 package com.xuptdata.bdll.controller;
 
 import com.xuptdata.bdll.entity.Books;
-import com.xuptdata.bdll.entity.Response;
+import com.xuptdata.bdll.entity.Result;
 import com.xuptdata.bdll.entity.WishList;
-import com.xuptdata.bdll.service.BooksService;
-import com.xuptdata.bdll.service.WishListService;
 import com.xuptdata.bdll.service.impl.BooksServiceImpl;
 import com.xuptdata.bdll.service.impl.WishListServiceImpl;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.xml.crypto.Data;
 import java.util.Date;
 import java.util.List;
 
@@ -25,6 +21,7 @@ import java.util.List;
 public class WishListController {
     @Autowired
     private WishListServiceImpl wishListService;
+
     @Autowired
     private BooksServiceImpl booksService;
 
@@ -74,12 +71,12 @@ public class WishListController {
      * @return
      */
     @PutMapping("/update")
-    public Response update(@PathVariable WishList wishList){
+    public Result update(@PathVariable WishList wishList){
         int result =  wishListService.updateWishList(wishList);
         if (result == 0){
-            return new Response("error","更新失败");
+            return new Result("error","更新失败");
         }
-        return new Response("success","更新成功");
+        return new Result("success","更新成功");
     }
 
     /**
@@ -88,13 +85,13 @@ public class WishListController {
      * @return
      */
     @PostMapping("/insert")
-    public Response insert(@PathVariable WishList wishList){
+    public Result insert(@PathVariable WishList wishList){
         wishList.setCreateTime(new Date());
         int result =  wishListService.insertWishList(wishList);
         if (result == 0){
-            return new Response("error","添加失败");
+            return new Result("error","添加失败");
         }
-        return new Response("success","添加成功");
+        return new Result("success","添加成功");
     }
 
     /**
@@ -103,14 +100,14 @@ public class WishListController {
      * @return
      */
     @PutMapping("/delete")
-    public Response deleteWish(@PathVariable int id){
+    public Result deleteWish(@PathVariable int id){
         WishList wishList = wishListService.getById(id);
         wishList.setDelFlag(true);
         int result = wishListService.updateWishList(wishList);
         if (result == 0){
-            return new Response("error","删除失败");
+            return new Result("error","删除失败");
         }
-        return new Response("success","删除成功");
+        return new Result("success","删除成功");
 
     }
 
@@ -121,7 +118,7 @@ public class WishListController {
      * @return
      */
     @PostMapping("/update/statue")
-    public Response updateStatue(@PathVariable int statue,@PathVariable int id){
+    public Result updateStatue(@PathVariable int statue, @PathVariable int id){
         WishList wishList = wishListService.getById(id);
         if (statue == 0){
             wishList.setStatus(1);
@@ -135,16 +132,14 @@ public class WishListController {
             books.setStatus(true);
             int result = booksService.insertBook(books);
             if (result == 0){
-                return new Response("error","添加失败");
+                return new Result("error","添加失败");
             }
-            return new Response("success","添加成功");
+            return new Result("success","添加成功");
         }
         int result = wishListService.updateWishList(wishList);
         if (result == 0){
-            return new Response("error","更新失败");
+            return new Result("error","更新失败");
         }
-        return new Response("success","更新成功");
-
+        return new Result("success","更新成功");
     }
-
 }
