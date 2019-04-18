@@ -21,8 +21,6 @@ public interface WishListService {
 
     int insertWishList(WishList wishList);
 
-    int deleteWishList(int id);
-
     int updateWishList(WishList wishList);
 
     PageInfo getByStatue(int pageNum,int pageSize,int statue);

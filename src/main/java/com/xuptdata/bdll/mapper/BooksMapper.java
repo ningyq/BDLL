@@ -6,7 +6,6 @@ import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
-
 public interface BooksMapper extends BaseMapper<Books> {
     @Select("select * from books where del_flag = 0")
     List<Books> selectList();

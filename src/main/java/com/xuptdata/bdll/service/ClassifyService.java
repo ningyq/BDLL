@@ -1,17 +1,18 @@
 package com.xuptdata.bdll.service;
 
+import com.github.pagehelper.PageInfo;
 import com.xuptdata.bdll.entity.Classify;
 
 import java.util.List;
 
 public interface ClassifyService {
-    List<Classify> getList();
+    PageInfo getList(int pageNum, int pageSize);
 
     Classify getById(int id);
 
     Classify getByName(String name);
 
-    List<Classify> getByStatue(boolean statue);
+    PageInfo getByStatue(boolean statue, int pageNum, int pageSize);
 
     int insertClassify(Classify classify);
 

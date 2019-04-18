@@ -1,5 +1,7 @@
 package com.xuptdata.bdll.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.xuptdata.bdll.entity.Classify;
 import com.xuptdata.bdll.mapper.ClassifyMapper;
 import com.xuptdata.bdll.service.ClassifyService;
@@ -16,8 +18,11 @@ public class ClassifyServiceImpl implements ClassifyService {
     ClassifyMapper classifyMapper;
 
     @Override
-    public List<Classify> getList() {
-        return classifyMapper.selectByDelFlag(0);
+    public PageInfo getList(int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<Classify> classifyList = classifyMapper.selectByDelFlag(0);
+        PageInfo<Classify> pageInfo = new PageInfo<>(classifyList);
+        return pageInfo;
     }
 
     @Override
@@ -36,8 +41,11 @@ public class ClassifyServiceImpl implements ClassifyService {
     }
 
     @Override
-    public List<Classify> getByStatue(boolean statue) {
-        return classifyMapper.selectByStatue(statue);
+    public PageInfo getByStatue(boolean statue, int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<Classify> classifyList = classifyMapper.selectByStatue(statue);
+        PageInfo<Classify> pageInfo = new PageInfo<>(classifyList);
+        return pageInfo;
     }
 
     @Override

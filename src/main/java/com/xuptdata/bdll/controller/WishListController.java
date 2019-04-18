@@ -1,4 +1,5 @@
 package com.xuptdata.bdll.controller;
+
 import com.github.pagehelper.PageInfo;
 import com.xuptdata.bdll.entity.Books;
 import com.xuptdata.bdll.entity.Result;
@@ -144,7 +145,6 @@ public class WishListController {
             if (result == 0){
                 return new Result("error","添加失败");
             }
-            return new Result("success","添加成功");
         }
         int result = wishListService.updateWishList(wishList);
         if (result == 0){

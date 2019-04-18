@@ -64,12 +64,6 @@ public class BooksServiceImpl implements BooksService {
 
     @Override
     @Transactional
-    public int deleteBookById(int id) {
-        return booksMapper.deleteByPrimaryKey(id);
-    }
-
-    @Override
-    @Transactional
     public int updateBooks(Books books) {
         return booksMapper.updateByPrimaryKey(books);
     }

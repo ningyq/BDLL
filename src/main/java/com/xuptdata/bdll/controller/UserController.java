@@ -1,5 +1,6 @@
 package com.xuptdata.bdll.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.xuptdata.bdll.entity.User;
 import com.xuptdata.bdll.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,8 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/user")
@@ -21,8 +20,8 @@ public class UserController {
      * @return
      */
     @GetMapping("/all")
-    public List<User> getList() {
-        return userService.getList();
+    public PageInfo getList(@PathVariable int pageNum, @PathVariable  int pageSize) {
+        return userService.getList(pageNum, pageSize);
     }
 
     /**

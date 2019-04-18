@@ -1,5 +1,6 @@
 package com.xuptdata.bdll.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.xuptdata.bdll.entity.Classify;
 import com.xuptdata.bdll.entity.Result;
 import com.xuptdata.bdll.service.ClassifyService;
@@ -7,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * @Author: ningyq
@@ -23,9 +23,9 @@ public class ClassifyController {
      * 查询所有分类
      * @return
      */
-    @GetMapping("/getList")
-    public List<Classify> getList(){
-        return classifyService.getList();
+    @GetMapping("/list")
+    public PageInfo getList(@PathVariable int pageNum, @PathVariable  int pageSize){
+        return classifyService.getList(pageNum, pageSize);
     }
 
     /**
@@ -34,8 +34,9 @@ public class ClassifyController {
      * @return
      */
     @GetMapping("/id/{id}")
-    public Classify getById(@PathVariable int id){
-        return classifyService.getById(id);
+    public Result getById(@PathVariable int id){
+        Classify classify = classifyService.getById(id);
+        return new Result("success","查找成功", classify);
     }
 
     /**
@@ -43,9 +44,10 @@ public class ClassifyController {
      * @param name
      * @return
      */
-    @GetMapping("/getByName")
-    public Classify getByName(@PathVariable String name){
-        return classifyService.getByName(name);
+    @GetMapping("/name")
+    public Result getByName(@PathVariable String name){
+        Classify classify = classifyService.getByName(name);
+        return new Result("success","查找成功", classify);
     }
 
     /**
@@ -53,9 +55,10 @@ public class ClassifyController {
      * @param statue
      * @return
      */
-    @GetMapping("/getByStatue")
-    public List<Classify> getByStatue(@PathVariable boolean statue){
-        return classifyService.getByStatue(statue);
+    @GetMapping("/statue")
+    public Result getByStatue(@PathVariable boolean statue, @PathVariable  int pageNum, @PathVariable  int pageSize){
+        PageInfo<Classify> page =  classifyService.getByStatue(statue, pageNum, pageSize);
+        return new Result("success","查找成功", page);
     }
 
     /**
@@ -85,5 +88,19 @@ public class ClassifyController {
             return new Result("error","添加失败");
         }
         return new Result("success","添加成功");
+    }
+
+    /**
+     * 根据编号删除
+     * @param id
+     * @return
+     */
+    @PostMapping("/delete/{id}")
+    public Result delete(@PathVariable int id) {
+        int result =  classifyService.deleteClassifyId(id);
+        if (result == 0){
+            return new Result("error","删除失败");
+        }
+        return new Result("success","删除成功");
     }
 }

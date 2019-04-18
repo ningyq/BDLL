@@ -1,4 +1,5 @@
 package com.xuptdata.bdll.controller;
+
 import com.github.pagehelper.PageInfo;
 import com.xuptdata.bdll.entity.Books;
 import com.xuptdata.bdll.entity.Result;
@@ -31,10 +32,7 @@ public class BooksController {
     @GetMapping("/getList")
     public Result getList(@PathVariable int pageNum, @PathVariable int pageSize){
         PageInfo pageInfo = booksService.getList(pageNum,pageSize);
-
         return new Result("success","查询成功",pageInfo);
-
-
     }
 
     /**
@@ -164,7 +162,6 @@ public class BooksController {
             return new Result("success","借阅成功");
         }
         return new Result("error","借阅失败，书籍无库存");
-
     }
 
     /**
@@ -186,7 +183,6 @@ public class BooksController {
         }
         return new Result("success","还书成功");
     }
-
 
     /**
      * 删除

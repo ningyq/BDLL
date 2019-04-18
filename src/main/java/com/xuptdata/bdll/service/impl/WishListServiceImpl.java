@@ -19,6 +19,7 @@ import java.util.List;
 public class WishListServiceImpl implements WishListService {
     @Autowired
     private WishListMapper wishListMapper;
+
     @Override
     public PageInfo getList(int pageNum,int pageSize) {
         PageHelper.startPage(pageNum,pageSize);
@@ -51,12 +52,6 @@ public class WishListServiceImpl implements WishListService {
     @Transactional
     public int insertWishList(WishList wishList) {
         return wishListMapper.insert(wishList);
-    }
-
-    @Override
-    @Transactional
-    public int deleteWishList(int id) {
-        return wishListMapper.deleteByPrimaryKey(id);
     }
 
     @Override
