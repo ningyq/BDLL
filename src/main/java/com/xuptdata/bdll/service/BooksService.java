@@ -18,11 +18,13 @@ public interface BooksService {
 
     List<Books> getByName(String name);
 
-    PageInfo getByClassify(int pageNum,int pageSize,int classifyId);
+    PageInfo getByClassify(int pageNum, int pageSize, int classifyId);
 
-    PageInfo getByStatue(int pageNum,int pageSize,boolean statue);
+    PageInfo getByStatus(int pageNum, int pageSize, boolean status);
 
     int insertBook(Books book);
 
     int updateBooks(Books books);
+
+    int updateByClassifyId(int classifyId);
 }

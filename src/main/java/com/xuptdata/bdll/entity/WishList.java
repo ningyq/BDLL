@@ -1,5 +1,6 @@
 package com.xuptdata.bdll.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.persistence.GeneratedValue;
@@ -27,7 +28,9 @@ public class WishList {
 
     private String remark;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
 }

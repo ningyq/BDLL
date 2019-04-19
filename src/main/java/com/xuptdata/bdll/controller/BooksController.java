@@ -5,13 +5,11 @@ import com.xuptdata.bdll.entity.Books;
 import com.xuptdata.bdll.entity.Result;
 import com.xuptdata.bdll.service.impl.BooksServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,7 +17,7 @@ import java.util.UUID;
  * @Author: slicing
  * @Date: 2019/4/17 10:21
  */
-@Controller
+@RestController
 @RequestMapping("/books")
 public class BooksController {
     @Autowired
@@ -29,10 +27,10 @@ public class BooksController {
      * 查询所有图书信息
      * @return
      */
-    @GetMapping("/getList")
-    public Result getList(@PathVariable int pageNum, @PathVariable int pageSize){
-        PageInfo pageInfo = booksService.getList(pageNum,pageSize);
-        return new Result("success","查询成功",pageInfo);
+    @GetMapping("/list")
+    public Result getList(int pageNum, int pageSize){
+        PageInfo pageInfo = booksService.getList(pageNum, pageSize);
+        return new Result("success", "查询成功", pageInfo);
     }
 
     /**
@@ -40,10 +38,10 @@ public class BooksController {
      * @param id
      * @return
      */
-    @GetMapping("/getById")
-    public Result getById(@PathVariable int id){
+    @GetMapping("/id")
+    public Result getById(int id){
         Books books = booksService.getById(id);
-        return new Result("success","查询成功",books);
+        return new Result("success", "查询成功",books);
     }
 
     /**
@@ -84,10 +82,10 @@ public class BooksController {
      * @param name
      * @return
      */
-    @GetMapping("/getByName")
-    public Result getByName(@PathVariable String name){
+    @GetMapping("/name")
+    public Result getByName(String name){
         List<Books> books = booksService.getByName(name);
-        return new Result("success","查询成功",books);
+        return new Result("success", "查询成功", books);
     }
 
     /**
@@ -95,21 +93,21 @@ public class BooksController {
      * @param classifyId
      * @return
      */
-    @GetMapping("/getByClassifyId")
-    public Result getByClassifyId(@PathVariable int pageNum, @PathVariable int pageSize,@PathVariable int classifyId){
-        PageInfo pageInfo = booksService.getByClassify(pageNum,pageSize,classifyId);
-        return new Result("success","查询成功",pageInfo);
+    @GetMapping("/classifyId")
+    public Result getByClassifyId(int pageNum, int pageSize, int classifyId){
+        PageInfo pageInfo = booksService.getByClassify(pageNum, pageSize, classifyId);
+        return new Result("success", "查询成功", pageInfo);
     }
 
     /**
      * 根据状态查询
-     * @param statue
+     * @param status
      * @return
      */
-    @GetMapping("/getByStatue")
-    public Result getByStatue(@PathVariable int pageNum, @PathVariable int pageSize,@PathVariable boolean statue){
-        PageInfo pageInfo =  booksService.getByStatue(pageNum,pageSize,statue);
-        return new Result("success","查询成功",pageInfo);
+    @GetMapping("/status")
+    public Result getByStatus(int pageNum, int pageSize, boolean status){
+        PageInfo pageInfo =  booksService.getByStatus(pageNum, pageSize, status);
+        return new Result("success", "查询成功", pageInfo);
     }
 
     /**
@@ -118,12 +116,12 @@ public class BooksController {
      * @return
      */
     @PutMapping("/update")
-    public Result update(@PathVariable Books books){
+    public Result update(Books books){
         int result =  booksService.updateBooks(books);
         if (result == 0){
-            return new Result("error","更新失败");
+            return new Result("error", "更新失败");
         }
-        return new Result("success","更新成功");
+        return new Result("success", "更新成功");
     }
 
     /**
@@ -132,13 +130,12 @@ public class BooksController {
      * @return
      */
     @PostMapping("/insert")
-    public Result insert(@PathVariable Books books){
-        books.setCreateTime(new Date());
+    public Result insert(Books books){
         int result =  booksService.insertBook(books);
         if (result == 0){
-            return new Result("error","添加失败");
+            return new Result("error", "添加失败");
         }
-        return new Result("success","添加成功");
+        return new Result("success", "添加成功");
     }
 
     /**
@@ -148,20 +145,22 @@ public class BooksController {
      */
 
     @PutMapping("/update/borrow")
-    public Result borrow(@PathVariable int id){
+    public Result borrow(int id){
         Books books = booksService.getById(id);
-        if (books.getNumber()>0){
-            books.setNumber(books.getNumber()-1);
+        Books books1 = new Books();
+        books1.setId(books.getId());
+        if (books.getNumber() > 0){
+            books1.setNumber(books.getNumber() - 1);
             if (books.getNumber() == 0){
-                books.setStatus(false);
+                books1.setStatus(false);
             }
-            int result = booksService.updateBooks(books);
+            int result = booksService.updateBooks(books1);
             if (result == 0){
-                return new Result("error","借阅失败");
+                return new Result("error", "借阅失败");
             }
-            return new Result("success","借阅成功");
+            return new Result("success", "借阅成功");
         }
-        return new Result("error","借阅失败，书籍无库存");
+        return new Result("error", "借阅失败，书籍无库存");
     }
 
     /**
@@ -169,19 +168,20 @@ public class BooksController {
      * @param id
      * @return
      */
-
     @PutMapping("/update/restitution")
-    public Result restitution(@PathVariable int id){
+    public Result restitution(int id){
         Books books = booksService.getById(id);
-        books.setNumber(books.getNumber()-1);
+        Books books1 = new Books();
+        books1.setId(id);
+        books1.setNumber(books.getNumber() + 1);
         if (books.getNumber() == 1){
-            books.setStatus(true);
+            books1.setStatus(true);
         }
-        int result =  booksService.updateBooks(books);
+        int result =  booksService.updateBooks(books1);
         if (result == 0){
-            return new Result("error","还书失败");
+            return new Result("error", "还书失败");
         }
-        return new Result("success","还书成功");
+        return new Result("success", "还书成功");
     }
 
     /**
@@ -190,13 +190,14 @@ public class BooksController {
      * @return
      */
     @PutMapping("/delete")
-    public Result deleteWish(@PathVariable int id){
-        Books books = booksService.getById(id);
+    public Result delete(int id){
+        Books books = new Books();
+        books.setId(id);
         books.setDelFlag(true);
         int result =  booksService.updateBooks(books);
         if (result == 0){
-            return new Result("error","删除失败");
+            return new Result("error", "删除失败");
         }
-        return new Result("success","删除成功");
+        return new Result("success", "删除成功");
     }
 }

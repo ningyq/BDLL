@@ -20,55 +20,32 @@ public class ClassifyServiceImpl implements ClassifyService {
     @Override
     public PageInfo getList(int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
-        List<Classify> classifyList = classifyMapper.selectByDelFlag(0);
+        List<Classify> classifyList = classifyMapper.selectList();
         PageInfo<Classify> pageInfo = new PageInfo<>(classifyList);
         return pageInfo;
     }
 
     @Override
     public Classify getById(int id) {
-        Classify classify = classifyMapper.selectByPrimaryKey(id);
-        if (classify.getDelFlag() == false) {
-            return classify;
-        } else {
-            return null;
-        }
+        return classifyMapper.selectById(id);
     }
 
     @Override
-    public Classify getByName(String name) {
+    public List<Classify> getByName(String name) {
         return classifyMapper.selectByName(name);
-    }
-
-    @Override
-    public PageInfo getByStatue(boolean statue, int pageNum, int pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
-        List<Classify> classifyList = classifyMapper.selectByStatue(statue);
-        PageInfo<Classify> pageInfo = new PageInfo<>(classifyList);
-        return pageInfo;
     }
 
     @Override
     @Transactional
     public int insertClassify(Classify classify) {
-        return classifyMapper.insert(classify);
+        return classifyMapper.insertSelective(classify);
     }
 
-    @Override
-    @Transactional
-    public int deleteClassifyId(int id) {
-        Classify classify = getById(id);
-        if (classify == null) {
-            return 0;
-        } else {
-            classify.setDelFlag(true);
-            return 1;
-        }
-    }
+
 
     @Override
     @Transactional
     public int updateClassify(Classify classify) {
-        return classifyMapper.updateByPrimaryKey(classify);
+        return classifyMapper.updateByPrimaryKeySelective(classify);
     }
 }

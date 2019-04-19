@@ -17,11 +17,13 @@ public interface WishListService {
 
     List<WishList> getByName(String name);
 
-    PageInfo getByClassify(int pageNum,int pageSize,int classifyId);
+    int updateByClassifyId(int classifyId);
 
     int insertWishList(WishList wishList);
 
     int updateWishList(WishList wishList);
 
-    PageInfo getByStatue(int pageNum,int pageSize,int statue);
+    PageInfo getByClassify(int pageNum, int pageSize, int classifyId);
+
+    PageInfo getByStatus(int pageNum, int pageSize, int status);
 }

@@ -7,12 +7,15 @@ import org.apache.ibatis.annotations.Select;
 import java.util.List;
 
 public interface ClassifyMapper extends BaseMapper<Classify> {
-    @Select("select * from classify where del_flag = 0 and name like #name#")
-    Classify selectByName(String name);
+    @Select("select * from classify where del_flag = 0 and name like concat('%', #{name}, '%')")
+    List<Classify> selectByName(String name);
 
-    @Select("select * from classify where del_flag = 0 and statue like #statue#")
-    List<Classify> selectByStatue(boolean statue);
+    @Select("select * from classify where del_flag = 0 and status = #{status}")
+    List<Classify> selectByStatue(boolean status);
 
-    @Select("select * from classify where del_flag = #delFlag#")
-    List<Classify> selectByDelFlag(int delFlag);
+    @Select("select * from classify where del_flag = 0")
+    List<Classify> selectList();
+
+    @Select("select * from classify where del_flag = 0 and id = #{id}")
+    Classify selectById(int id);
 }

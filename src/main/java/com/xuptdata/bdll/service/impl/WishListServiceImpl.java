@@ -21,8 +21,8 @@ public class WishListServiceImpl implements WishListService {
     private WishListMapper wishListMapper;
 
     @Override
-    public PageInfo getList(int pageNum,int pageSize) {
-        PageHelper.startPage(pageNum,pageSize);
+    public PageInfo getList(int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
         List<WishList> ret = wishListMapper.selectAll();
         PageInfo<WishList> pageInfo = new PageInfo<>(ret);
         return pageInfo;
@@ -30,7 +30,7 @@ public class WishListServiceImpl implements WishListService {
     }
     @Override
     public WishList getById(int id) {
-        WishList ret = wishListMapper.selectByPrimaryKey(id);
+        WishList ret = wishListMapper.selectById(id);
         return ret;
     }
 
@@ -41,8 +41,13 @@ public class WishListServiceImpl implements WishListService {
     }
 
     @Override
+    public int updateByClassifyId(int classifyId) {
+        return wishListMapper.updateClassify(classifyId);
+    }
+
+    @Override
     public PageInfo getByClassify(int pageNum, int pageSize, int classifyId) {
-        PageHelper.startPage(pageNum,pageSize);
+        PageHelper.startPage(pageNum, pageSize);
         List<WishList> ret = wishListMapper.getByClassify(classifyId);
         PageInfo<WishList> pageInfo = new PageInfo<>(ret);
         return pageInfo;
@@ -51,19 +56,19 @@ public class WishListServiceImpl implements WishListService {
     @Override
     @Transactional
     public int insertWishList(WishList wishList) {
-        return wishListMapper.insert(wishList);
+        return wishListMapper.insertSelective(wishList);
     }
 
     @Override
     @Transactional
     public int updateWishList(WishList wishList) {
-        return wishListMapper.updateByPrimaryKey(wishList);
+        return wishListMapper.updateByPrimaryKeySelective(wishList);
     }
 
     @Override
-    public PageInfo getByStatue(int pageNum,int pageSize,int statue) {
-        PageHelper.startPage(pageNum,pageSize);
-        List<WishList> ret = wishListMapper.getByStatue(statue);
+    public PageInfo getByStatus(int pageNum, int pageSize, int status) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<WishList> ret = wishListMapper.getByStatue(status);
         PageInfo<WishList> pageInfo = new PageInfo<>(ret);
         return pageInfo;
     }

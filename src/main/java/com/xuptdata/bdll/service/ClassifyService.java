@@ -10,13 +10,9 @@ public interface ClassifyService {
 
     Classify getById(int id);
 
-    Classify getByName(String name);
-
-    PageInfo getByStatue(boolean statue, int pageNum, int pageSize);
+    List<Classify> getByName(String name);
 
     int insertClassify(Classify classify);
-
-    int deleteClassifyId(int id);
 
     int updateClassify(Classify classify);
 }

@@ -1,5 +1,6 @@
 package com.xuptdata.bdll.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.GeneratedValue;
@@ -14,6 +15,7 @@ public class User {
 
     private String username;
 
+    @JsonIgnore
     private String password;
 
     private Boolean enabled;

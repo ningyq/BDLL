@@ -1,13 +1,16 @@
 package com.xuptdata.bdll.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.xuptdata.bdll.entity.Books;
 import com.xuptdata.bdll.entity.Classify;
 import com.xuptdata.bdll.entity.Result;
+import com.xuptdata.bdll.service.BooksService;
 import com.xuptdata.bdll.service.ClassifyService;
+import com.xuptdata.bdll.service.WishListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
+import java.util.List;
 
 /**
  * @Author: ningyq
@@ -19,13 +22,20 @@ public class ClassifyController {
     @Autowired
     private ClassifyService classifyService;
 
+    @Autowired
+    private BooksService booksService;
+
+    @Autowired
+    private WishListService wishListService;
+
     /**
      * 查询所有分类
      * @return
      */
     @GetMapping("/list")
-    public PageInfo getList(@PathVariable int pageNum, @PathVariable  int pageSize){
-        return classifyService.getList(pageNum, pageSize);
+    public Result getList(int pageNum, int pageSize){
+        PageInfo pageInfo = classifyService.getList(pageNum, pageSize);
+        return new Result("success", "查询成功", pageInfo);
     }
 
     /**
@@ -33,10 +43,10 @@ public class ClassifyController {
      * @param id
      * @return
      */
-    @GetMapping("/id/{id}")
-    public Result getById(@PathVariable int id){
+    @GetMapping("/id")
+    public Result getById(int id){
         Classify classify = classifyService.getById(id);
-        return new Result("success","查找成功", classify);
+        return new Result("success", "查找成功", classify);
     }
 
     /**
@@ -45,20 +55,9 @@ public class ClassifyController {
      * @return
      */
     @GetMapping("/name")
-    public Result getByName(@PathVariable String name){
-        Classify classify = classifyService.getByName(name);
-        return new Result("success","查找成功", classify);
-    }
-
-    /**
-     * 根据状态查询
-     * @param statue
-     * @return
-     */
-    @GetMapping("/statue")
-    public Result getByStatue(@PathVariable boolean statue, @PathVariable  int pageNum, @PathVariable  int pageSize){
-        PageInfo<Classify> page =  classifyService.getByStatue(statue, pageNum, pageSize);
-        return new Result("success","查找成功", page);
+    public Result getByName(String name){
+        List<Classify> classifyList = classifyService.getByName(name);
+        return new Result("success", "查找成功", classifyList);
     }
 
     /**
@@ -66,13 +65,13 @@ public class ClassifyController {
      * @param classify
      * @return
      */
-    @PostMapping("/update")
-    public Result update(@PathVariable Classify classify){
+    @PutMapping("/update")
+    public Result update(Classify classify){
         int result = classifyService.updateClassify(classify);
         if (result == 0){
-            return new Result("error","更新失败");
+            return new Result("error", "更新失败");
         }
-        return new Result("success","更新成功");
+        return new Result("success", "更新成功");
     }
 
     /**
@@ -81,13 +80,12 @@ public class ClassifyController {
      * @return
      */
     @PostMapping("/insert")
-    public Result insert(@PathVariable Classify classify){
-        classify.setCreateTime(new Date());
+    public Result insert(Classify classify){
         int result =  classifyService.insertClassify(classify);
         if (result == 0){
-            return new Result("error","添加失败");
+            return new Result("error", "添加失败");
         }
-        return new Result("success","添加成功");
+        return new Result("success", "添加成功");
     }
 
     /**
@@ -95,12 +93,17 @@ public class ClassifyController {
      * @param id
      * @return
      */
-    @PostMapping("/delete/{id}")
-    public Result delete(@PathVariable int id) {
-        int result =  classifyService.deleteClassifyId(id);
+    @PutMapping("/delete")
+    public Result delete(int id){
+        Classify classify = new Classify();
+        classify.setId(id);
+        classify.setDelFlag(true);
+        int result =  classifyService.updateClassify(classify);
         if (result == 0){
-            return new Result("error","删除失败");
+            return new Result("error", "删除失败");
         }
-        return new Result("success","删除成功");
+        booksService.updateByClassifyId(id);
+        wishListService.updateByClassifyId(id);
+        return new Result("success", "删除成功");
     }
 }
