@@ -16,7 +16,7 @@ public interface BooksService {
 
     Books getById(int id);
 
-    List<Books> getByName(String name);
+    PageInfo getByName(int pageNum, int pageSize, String name);
 
     PageInfo getByClassify(int pageNum, int pageSize, int classifyId);
 

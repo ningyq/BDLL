@@ -83,9 +83,9 @@ public class BooksController {
      * @return
      */
     @GetMapping("/name")
-    public Result getByName(String name){
-        List<Books> books = booksService.getByName(name);
-        return new Result("success", "查询成功", books);
+    public Result getByName(int pageNum, int pageSize, String name){
+        PageInfo pageInfo = booksService.getByName(pageNum, pageSize, name);
+        return new Result("success", "查询成功", pageInfo);
     }
 
     /**

@@ -35,9 +35,11 @@ public class BooksServiceImpl implements BooksService {
     }
 
     @Override
-    public List<Books> getByName(String name) {
+    public PageInfo getByName(int pageNum, int pageSize, String name) {
+        PageHelper.startPage(pageNum, pageSize);
         List<Books> ret = booksMapper.selectByName(name);
-        return ret;
+        PageInfo<Books> pageInfo = new PageInfo<>(ret);
+        return pageInfo;
     }
 
     @Override
