@@ -1,7 +1,6 @@
 package com.xuptdata.bdll.controller;
 
 import com.github.pagehelper.PageInfo;
-import com.xuptdata.bdll.entity.Books;
 import com.xuptdata.bdll.entity.Classify;
 import com.xuptdata.bdll.entity.Result;
 import com.xuptdata.bdll.service.BooksService;
@@ -28,8 +27,13 @@ public class ClassifyController {
     @Autowired
     private WishListService wishListService;
 
+    @GetMapping("/all")
+    public List<Classify> getAll() {
+        return classifyService.getAll();
+    }
+
     /**
-     * 查询所有分类
+     * 查询所有分类(分页）
      * @return
      */
     @GetMapping("/list")
@@ -56,7 +60,7 @@ public class ClassifyController {
      */
     @GetMapping("/name")
     public Result getByName(String name){
-        List<Classify> classifyList = classifyService.getByName(name);
+        Classify classifyList = classifyService.getByName(name);
         return new Result("success", "查找成功", classifyList);
     }
 
@@ -84,6 +88,8 @@ public class ClassifyController {
         int result =  classifyService.insertClassify(classify);
         if (result == 0){
             return new Result("error", "添加失败");
+        } else if (result == -1) {
+            return new Result("error", "分类已存在");
         }
         return new Result("success", "添加成功");
     }

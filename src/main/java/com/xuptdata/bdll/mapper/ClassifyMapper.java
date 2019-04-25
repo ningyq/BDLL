@@ -7,8 +7,8 @@ import org.apache.ibatis.annotations.Select;
 import java.util.List;
 
 public interface ClassifyMapper extends BaseMapper<Classify> {
-    @Select("select * from classify where del_flag = 0 and name like concat('%', #{name}, '%')")
-    List<Classify> selectByName(String name);
+    @Select("select * from classify where del_flag = 0 and name = #{name}")
+    Classify selectByName(String name);
 
     @Select("select * from classify where del_flag = 0 and status = #{status}")
     List<Classify> selectByStatue(boolean status);
