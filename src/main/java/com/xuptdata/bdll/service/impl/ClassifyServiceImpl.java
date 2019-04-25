@@ -18,6 +18,11 @@ public class ClassifyServiceImpl implements ClassifyService {
     ClassifyMapper classifyMapper;
 
     @Override
+    public List<Classify> getAll() {
+        return classifyMapper.selectList();
+    }
+
+    @Override
     public PageInfo getList(int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         List<Classify> classifyList = classifyMapper.selectList();
@@ -31,13 +36,17 @@ public class ClassifyServiceImpl implements ClassifyService {
     }
 
     @Override
-    public List<Classify> getByName(String name) {
+    public Classify getByName(String name) {
         return classifyMapper.selectByName(name);
     }
 
     @Override
     @Transactional
     public int insertClassify(Classify classify) {
+        Classify classify1 = getByName(classify.getName());
+        if (classify1 != null) {
+            return -1;
+        }
         return classifyMapper.insertSelective(classify);
     }
 

@@ -6,11 +6,13 @@ import com.xuptdata.bdll.entity.Classify;
 import java.util.List;
 
 public interface ClassifyService {
+    List<Classify> getAll();
+
     PageInfo getList(int pageNum, int pageSize);
 
     Classify getById(int id);
 
-    List<Classify> getByName(String name);
+    Classify getByName(String name);
 
     int insertClassify(Classify classify);
 
