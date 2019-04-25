@@ -4,8 +4,8 @@ import com.github.pagehelper.PageInfo;
 import com.xuptdata.bdll.entity.Books;
 import com.xuptdata.bdll.entity.Result;
 import com.xuptdata.bdll.entity.WishList;
-import com.xuptdata.bdll.service.impl.BooksServiceImpl;
-import com.xuptdata.bdll.service.impl.WishListServiceImpl;
+import com.xuptdata.bdll.service.BooksService;
+import com.xuptdata.bdll.service.WishListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -18,10 +18,10 @@ import java.util.List;
 @RequestMapping("/wishList")
 public class WishListController {
     @Autowired
-    private WishListServiceImpl wishListService;
+    private WishListService wishListService;
 
     @Autowired
-    private BooksServiceImpl booksService;
+    private BooksService booksService;
 
     /**
      * 查询所有心愿单信息

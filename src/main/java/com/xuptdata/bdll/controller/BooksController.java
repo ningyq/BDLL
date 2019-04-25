@@ -3,14 +3,13 @@ package com.xuptdata.bdll.controller;
 import com.github.pagehelper.PageInfo;
 import com.xuptdata.bdll.entity.Books;
 import com.xuptdata.bdll.entity.Result;
-import com.xuptdata.bdll.service.impl.BooksServiceImpl;
+import com.xuptdata.bdll.service.BooksService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 import java.util.UUID;
 
 /**
@@ -21,7 +20,7 @@ import java.util.UUID;
 @RequestMapping("/books")
 public class BooksController {
     @Autowired
-    private BooksServiceImpl booksService;
+    private BooksService booksService;
 
     /**
      * 查询所有图书信息
