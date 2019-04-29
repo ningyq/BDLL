@@ -10,9 +10,6 @@ public interface ClassifyMapper extends BaseMapper<Classify> {
     @Select("select * from classify where del_flag = 0 and name = #{name}")
     Classify selectByName(String name);
 
-    @Select("select * from classify where del_flag = 0 and status = #{status}")
-    List<Classify> selectByStatue(boolean status);
-
     @Select("select * from classify where del_flag = 0")
     List<Classify> selectList();
 
