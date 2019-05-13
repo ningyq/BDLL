@@ -4,13 +4,13 @@ import com.github.pagehelper.PageInfo;
 import com.xuptdata.bdll.entity.Books;
 import com.xuptdata.bdll.entity.Result;
 import com.xuptdata.bdll.service.BooksService;
+import com.xuptdata.bdll.utils.FtpUtil;
+import com.xuptdata.bdll.utils.UploadUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
 import java.io.IOException;
-import java.util.UUID;
 
 /**
  * @Author: slicing
@@ -45,33 +45,19 @@ public class BooksController {
 
     /**
      * 上传图书图片
-     * @param req
      * @param image
      * @return
      */
     @PostMapping("/upload")
-    public Result uploadImg(HttpServletRequest req, MultipartFile image) {
-        StringBuffer url = new StringBuffer();
-        String filePath = "/bookimg/";
-        String imgFolderPath = req.getServletContext().getRealPath(filePath);
-        File imgFolder = new File(imgFolderPath);
-        if (!imgFolder.exists()) {
-            imgFolder.mkdirs();
-        }
-        url.append(req.getScheme())
-                .append("://")
-                .append(req.getServerName())
-                .append(":")
-                .append(req.getServerPort())
-                .append(req.getContextPath())
-                .append(filePath);
-        String imgName = UUID.randomUUID() + "_" + image.getOriginalFilename().replaceAll(" ", "");
-        try {
-            image.transferTo(new File(imgFolder, imgName));
-            url.append("/").append(imgName);
-            return new Result("success", url.toString());
-        } catch (IOException e) {
-            e.printStackTrace();
+    public Result uploadImg(MultipartFile image) throws IOException {
+        String url;
+        String oldName = image.getOriginalFilename();
+        String newName = UploadUtils.generateRandomFileName(oldName);
+        String imageSavePath = "/book";
+
+        url = FtpUtil.pictureUploadByConfig(newName, imageSavePath, image.getInputStream());
+        if (url != null) {
+            return new Result("success","上传成功!", url);
         }
         return new Result("error", "上传失败!");
     }

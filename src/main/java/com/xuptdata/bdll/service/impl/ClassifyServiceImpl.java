@@ -50,8 +50,6 @@ public class ClassifyServiceImpl implements ClassifyService {
         return classifyMapper.insertSelective(classify);
     }
 
-
-
     @Override
     @Transactional
     public int updateClassify(Classify classify) {
