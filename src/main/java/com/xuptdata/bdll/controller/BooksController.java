@@ -45,11 +45,13 @@ public class BooksController {
 
     /**
      * 上传图书图片
+     * @param id
      * @param image
      * @return
+     * @throws IOException
      */
     @PostMapping("/upload")
-    public Result uploadImg(MultipartFile image) throws IOException {
+    public Result uploadImg(int id, MultipartFile image) throws IOException {
         String url;
         String oldName = image.getOriginalFilename();
         String newName = UploadUtils.generateRandomFileName(oldName);
@@ -57,6 +59,10 @@ public class BooksController {
 
         url = FtpUtil.pictureUploadByConfig(newName, imageSavePath, image.getInputStream());
         if (url != null) {
+            url = "http://image.xuptdata.com" + url;
+            Books book = booksService.getById(id);
+            book.setImgUrl(url);
+            booksService.updateBooks(book);
             return new Result("success","上传成功!", url);
         }
         return new Result("error", "上传失败!");
